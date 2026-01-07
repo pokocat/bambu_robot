@@ -351,8 +351,11 @@ void updateEnv(float T, float H, float Noz, float Bed) {
   int line2W = line2.length() * 6 * size;
   int line2X = (240 - line2W) / 2;
   
-  // 清除整个环境信息区域
-  gfx->fillRect(0, y1 - 2, 240, (y2 + lineH) - (y1 - 2) + 4, TFT_BG);
+  // 只清除文字本身的区域，避免覆盖环形进度条
+  // 清除第一行文字
+  gfx->fillRect(line1X - 2, y1 - 2, line1W + 4, lineH + 4, TFT_BG);
+  // 清除第二行文字
+  gfx->fillRect(line2X - 2, y2 - 2, line2W + 4, lineH + 4, TFT_BG);
   
   // 绘制两行文本，使用不同颜色区分
   gfx->setTextSize(size);
