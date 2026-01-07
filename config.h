@@ -4,16 +4,16 @@
 /* ------------------------------------------------------------------
  *                Wi-Fi & MQTT credentials
  * ------------------------------------------------------------------*/
-static const char* WIFI_SSID     = "xxx";
-static const char* WIFI_PASSWORD = "xxxx";
+static const char* WIFI_SSID     = "Cony's";
+static const char* WIFI_PASSWORD = "juneismeinv";
 
-static const char* MQTT_SERVER   = "192.168.1.1";
+static const char* MQTT_SERVER   = "192.168.31.84";
 static const char* MQTT_USER     = "mqtt";
 static const char* MQTT_PASS     = "mqtt";
 
 /* ------------------------------------------------------------------
  *                GC9A01 240×240 Round LCD Pinout
- * ------------------------------------------------------------------*/
+ * ------------------------------------------------------ ------------*/
 #define TFT_SCK    4   // SPI SCK  → GPIO4
 #define TFT_MOSI   5   // SPI MOSI → GPIO5
 #define TFT_CS     6   // Chip-Select
