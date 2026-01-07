@@ -4,10 +4,10 @@
 /* ------------------------------------------------------------------
  *                Wi-Fi & MQTT credentials
  * ------------------------------------------------------------------*/
-static const char* WIFI_SSID     = "Cony's";
-static const char* WIFI_PASSWORD = "juneismeinv";
+static const char* WIFI_SSID     = "xxxx";
+static const char* WIFI_PASSWORD = "xxxx";
 
-static const char* MQTT_SERVER   = "192.168.31.84";
+static const char* MQTT_SERVER   = "192.168.1.1";
 static const char* MQTT_USER     = "mqtt";
 static const char* MQTT_PASS     = "mqtt";
 
