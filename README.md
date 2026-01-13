@@ -51,41 +51,9 @@ This project is built using the Arduino framework. You need to install the follo
 Since the configuration file contains sensitive WiFi and MQTT credentials, it is not included in the repository. You must create a `config.h` file in the project root.
 
 1.  Copy the template below.
-2.  Create a file named `config.h` next to `bambu_robot.ino`.
+2.  Modify `config.h` to match your setup.
 3.  Fill in your WiFi and MQTT details.
 
-```cpp
-// config.h template
-#ifndef CONFIG_H
-#define CONFIG_H
-
-/* ------------------------------------------------------------------
- *                Wi-Fi & MQTT credentials
- * ------------------------------------------------------------------*/
-static const char* WIFI_SSID     = "YOUR_WIFI_SSID";
-static const char* WIFI_PASSWORD = "YOUR_WIFI_PASSWORD";
-
-// Note: If connecting directly to Bambu Printer, you might need an MQTT bridge 
-// or SSL setup (port 8883). This project currently defaults to TCP port 1883.
-static const char* MQTT_SERVER   = "192.168.1.xxx"; // Your MQTT Broker IP
-static const char* MQTT_USER     = "bblp";          // Usually 'bblp' for Bambu
-static const char* MQTT_PASS     = "access_code";   // Your Printer Access Code
-
-/* ------------------------------------------------------------------
- *                Pin Definitions
- * ------------------------------------------------------------------*/
-#define TFT_SCK    4
-#define TFT_MOSI   5
-#define TFT_CS     6
-#define TFT_DC     7
-#define TFT_RST    8
-#define TFT_BL     0
-
-#define DHTPIN     3
-#define DHTTYPE    DHT11
-
-#endif  /* CONFIG_H */
-```
 
 ## 🚀 Installation
 
@@ -100,6 +68,34 @@ static const char* MQTT_PASS     = "access_code";   // Your Printer Access Code
     - **VS Code (PlatformIO/Arduino)**: Ensure your environment is set up for ESP32.
 4.  **Install Libraries**: Use Library Manager to install dependencies.
 5.  **Upload**: Connect your ESP32-C3 and click Upload.
+
+## ⚡️ Flashing Firmware
+
+You can download the compiled `.bin` files from the **GitHub Releases** page or the **Actions** artifacts.
+
+### Prerequisites
+
+You need `esptool` installed. If you have Python installed, run:
+```bash
+pip install esptool
+```
+
+### Flashing Command (ESP32-C3)
+
+To flash the firmware (App + Partitions + Bootloader) to a **ESP32-C3** board, connect your device via USB and run:
+
+```bash
+# Replace /dev/ttyUSB0 with your device port (e.g., COM3 on Windows, /dev/cu.usbserial... on macOS)
+esptool.py --chip esp32c3 --port /dev/ttyUSB0 --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size 4MB \
+  0x0 bambu_robot.ino.bootloader.bin \
+  0x8000 bambu_robot.ino.partitions.bin \
+  0x10000 bambu_robot.ino.bin
+```
+
+> ⚠️ **Important Note**: The firmware built by GitHub Actions uses a **dummy `config.h`** (with fake WiFi credentials). 
+> To make it work, you must either:
+> 1.  Compile and flash locally with your real `config.h`.
+> 2.  Or wait for future updates where we implement Web Config (WiFiManager).
 
 ## 🔄 CI/CD
 
