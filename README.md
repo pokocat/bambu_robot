@@ -1,5 +1,4 @@
-[![Arduino Build](https://github.com/pokocat/bambu_robot/actions/workflows/arduino_build.yml/badge.svg)](https://github.com/pokocat/bambu_robot/actions/workflows/arduino_build.yml)
-
+[![Arduino Build](https://github.com/pokocat/bambu_robot/actions/workflows/arduino_build.yml/badge.svg?branch=main)](https://github.com/pokocat/bambu_robot/actions/workflows/arduino_build.yml)
 
 # Bambu Lab Printer Monitor (ESP32-C3 Round Display)
 
