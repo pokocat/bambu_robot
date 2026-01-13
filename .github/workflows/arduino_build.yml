@@ -1,0 +1,36 @@
+name: Arduino Build
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Arduino CLI
+      uses: arduino/setup-arduino-cli@v1
+
+    - name: Install ESP32 Platform
+      run: |
+        arduino-cli config init
+        arduino-cli config add board_manager.additional_urls https://espressif.github.io/arduino-esp32/package_esp32_index.json
+        arduino-cli core update-index
+        arduino-cli core install esp32:esp32
+
+    - name: Install Libraries
+      run: |
+        arduino-cli lib install "PubSubClient"
+        arduino-cli lib install "Arduino_GFX_Library"
+        arduino-cli lib install "DHT sensor library"
+        arduino-cli lib install "Adafruit Unified Sensor"
+
+    - name: Compile Sketch
+      # 使用 esp32c3 开发板配置进行编译
+      run: arduino-cli compile --fqbn esp32:esp32:esp32c3 --warnings all bambu_robot.ino
