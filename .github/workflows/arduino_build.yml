@@ -32,5 +32,20 @@ jobs:
         arduino-cli lib install "Adafruit Unified Sensor"
 
     - name: Compile Sketch
-      # 使用 esp32c3 开发板配置进行编译
-      run: arduino-cli compile --fqbn esp32:esp32:esp32c3 --warnings all bambu_robot.ino
+      # 使用 esp32c3 开发板配置进行编译，并指定输出目录
+      run: |
+        mkdir -p build_output
+        arduino-cli compile --fqbn esp32:esp32:esp32c3 --warnings all --output-dir build_output bambu_robot.ino
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: firmware
+        path: build_output/*.bin
+
+    - name: Create Release
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: softprops/action-gh-release@v1
+      with:
+        files: build_output/*.bin
+        generate_release_notes: true
