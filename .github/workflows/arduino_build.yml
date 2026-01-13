@@ -27,7 +27,7 @@ jobs:
     - name: Install Libraries
       run: |
         arduino-cli lib install "PubSubClient"
-        arduino-cli lib install "Arduino_GFX_Library"
+        arduino-cli lib install "GFX Library for Arduino"
         arduino-cli lib install "DHT sensor library"
         arduino-cli lib install "Adafruit Unified Sensor"
 
