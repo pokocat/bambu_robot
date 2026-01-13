@@ -181,8 +181,12 @@ void updateProgressArc(int newProg) {
   int startAngle = 270; // 从顶部开始
   int sweepAngle = map(constrain(newProg,0,100), 0, 100, 0, 360);
   
-  // 使用极高密度的角度间隔（0.1度）确保形成连续环形
-  for (float angle = 0; angle <= sweepAngle; angle += 0.1) {
+  // 计算最佳步进角度：
+  // 外圆周长 C = 2 * PI * r1 = 2 * 3.14 * 110 ≈ 691 像素
+  // 360度 / 691 ≈ 0.52度/像素
+  // 为了确保没有缝隙（特别是在斜向线条时），步进应略小于 0.52度。
+  // 选 0.4 度：外圆间距约 0.76 像素，确保致密无缝，且比 0.1 度方案快 4 倍。
+  for (float angle = 0; angle <= sweepAngle; angle += 0.4) {
     float rad = (startAngle + angle) * PI / 180.0;
     int x1 = cx + cos(rad) * r0;
     int y1 = cy + sin(rad) * r0;
@@ -563,6 +567,10 @@ void setup(){
   pinMode(TFT_BL,OUTPUT); digitalWrite(TFT_BL,HIGH);
   
   gfx->begin(); 
+  // 显式设置旋转方向，防止意外镜像
+  // 如果屏幕显示反了，尝试修改为 1, 2, 3
+  gfx->setRotation(0);
+  delay(100); // 等待屏幕稳定
   gfx->fillScreen(TFT_BG); // Black BG
   dht.begin();
 
